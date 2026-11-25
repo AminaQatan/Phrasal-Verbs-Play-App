@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phrasal Verbs Play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Noto+Serif:wght@700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, playful, encouraging: a picture book that talks back
+   IDEA: the book itself: cream pages, five coloured chapters, white picture tiles
+   PICTURE: the cover mosaic on the home page, then the game board of illustrated tiles
+   COLOUR and TYPE: cream page, plum ink, one chapter colour per unit; Noto Serif titles, Andika (made for early readers)
+   LAYOUT: one column on phones; chapters as a shelf on wide screens; games centred under a progress bar */
+:root{color-scheme:light dark;--bg:light-dark(#fffbf4,#1a1320);--ink:light-dark(#332441,#f3eaf6);--soft:light-dark(#6e5d78,#c3b3cc);--line:light-dark(#ecdfd3,#3b2f44);--card:light-dark(#fff,#251b2c);--ok:light-dark(#1f7a4d,#5fd39a);--gold:#f0b429;--u:#733b82;--ul:light-dark(#f4e6f6,#35213d);--ut:light-dark(#733b82,#e2c3ea)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+.u2{--u:#9b4a26;--ul:light-dark(#fceadc,#3e271b);--ut:light-dark(#9b4a26,#f3c4a4)}
+.u3{--u:#226059;--ul:light-dark(#e0f1eb,#16332e);--ut:light-dark(#226059,#a6dccd)}
+.u4{--u:#344f86;--ul:light-dark(#e6edf9,#1d2843);--ut:light-dark(#344f86,#b8c9ef)}
+.u5{--u:#754052;--ul:light-dark(#f8e5eb,#3a2129);--ut:light-dark(#754052,#efbfcf)}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Andika,"Trebuchet MS",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Noto Serif",Georgia,serif;line-height:1.08;text-wrap:balance;margin:0}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.band{padding:clamp(18px,3.5vw,44px) max(5vw,16px)}
+.wrap{max-width:1140px;margin-inline:auto}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:8px max(5vw,16px);background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;background:none;border:0;padding:0;min-height:44px;font:800 18px "Noto Serif",Georgia,serif}
+.brand svg{width:28px;height:28px;color:light-dark(#733b82,#e2c3ea);flex:none}
+.pill{margin-inline-start:auto;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;background:light-dark(#fff1cc,#3a2f12);font-weight:700;white-space:nowrap}
+.pill svg{width:20px;height:20px;fill:var(--gold)}
+.mute{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center;flex:none}
+.mute svg{width:22px;height:22px}
+.hero{display:grid;gap:18px}
+.lab{margin:0;color:var(--soft);font-weight:700;font-size:15px}
+.hero h1{font-size:clamp(34px,6vw,52px);font-weight:800;margin:6px 0 10px}
+.lede{margin:0;max-width:34em}
+.tip{margin:14px 0 0;padding:12px 14px;border-radius:16px;background:light-dark(#f4e6f6,#2e2035);font-size:15px;max-width:34em}
+.cover{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:8px;aspect-ratio:25/14}
+.cover img{width:100%;height:100%;object-fit:cover;border-radius:18px;box-shadow:0 14px 26px -20px rgba(51,36,65,.8)}
+.cover img:first-child{grid-row:span 2;border-radius:24px}
+@media(min-width:900px){.hero{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:44px}}
+.h2{font-size:clamp(24px,4vw,30px);margin-bottom:14px}
+.chaps{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.chap{display:grid;gap:10px;text-align:start;background:var(--ul);border:0;border-radius:22px;padding:16px;transition:transform .15s}
+.chap:hover{transform:translateY(-3px)}
+.chap-top{display:flex;align-items:center;gap:10px}
+.num{width:38px;height:38px;border-radius:50%;background:var(--u);color:#fff;display:grid;place-items:center;font:800 18px "Noto Serif",Georgia,serif;flex:none}
+.age{font-size:14px;font-weight:700;color:var(--ut);margin:0}
+.chap-title{font:800 24px/1.1 "Noto Serif",Georgia,serif}
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.thumbs img{width:100%;aspect-ratio:1;object-fit:cover;background:#fff;border-radius:12px}
+.chap-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:15px}
+.stars-sm{display:flex;align-items:center;gap:5px}.stars-sm svg{width:20px;height:20px;fill:var(--gold)}
+.go{display:flex;align-items:center;gap:2px;color:var(--ut)}.go svg{width:18px;height:18px}
+.ubar{background:var(--u);color:#fff;display:flex;gap:14px;align-items:center;padding:18px max(5vw,16px)}
+.ubar .age{color:#fff;opacity:.9}
+.ubar h1{font-size:clamp(28px,5vw,40px);font-weight:800}
+.round{width:48px;height:48px;border-radius:50%;border:0;display:grid;place-items:center;flex:none;background:rgba(255,255,255,.2);color:inherit;padding:0}
+.round svg{width:24px;height:24px}
+.modes{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.mode{display:grid;gap:6px;align-content:start;justify-items:start;text-align:start;background:var(--card);border:2px solid var(--ul);border-radius:20px;padding:14px;transition:transform .15s}
+.mode:hover{transform:translateY(-3px)}
+.mode .ic{width:52px;height:52px;border-radius:16px;background:var(--ul);color:var(--ut);display:grid;place-items:center}
+.mode .ic svg{width:32px;height:32px}
+.mode b{font-size:18px;line-height:1.2}
+.mode small{font-size:14px;color:var(--soft);line-height:1.35}
+.mstars{display:flex;gap:2px;margin-top:2px}.mstars svg{width:20px;height:20px;fill:var(--line)}.mstars svg.on{fill:var(--gold)}
+.seen{font-size:14px;font-weight:700;color:var(--ut)}
+.hint{margin:0 0 6px;color:var(--soft)}
+.words h3{font-size:19px;margin:18px 0 8px;color:var(--ut)}
+.chips{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.chip{display:flex;gap:10px;align-items:center;text-align:start;background:var(--ul);border:0;border-radius:16px;padding:8px}
+.chip img{width:54px;height:54px;border-radius:12px;background:#fff;object-fit:cover;flex:none}
+.chip b{display:block;font-size:17px}.chip small{display:block;font-size:14px;color:var(--soft);line-height:1.3}
+.gbar{display:flex;align-items:center;gap:12px;padding:10px max(5vw,16px);background:var(--ul)}
+.gbar .round{background:var(--card);color:var(--ink)}
+.gname{font-weight:700;font-size:15px;color:var(--ut);white-space:nowrap}
+.meter{flex:1;height:14px;border-radius:99px;background:var(--card);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--u);border-radius:99px;transition:width .35s}
+.count{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:520px){.gname{display:none}.brand span{display:none}}
+.play{max-width:760px;margin-inline:auto;display:grid;gap:16px;justify-items:center;text-align:center}
+.flash{width:100%;max-width:520px;background:var(--card);border:2px solid var(--ul);border-radius:28px;padding:20px;display:grid;gap:12px;justify-items:center}
+.topic{margin:0;font-weight:700;color:var(--ut);font-size:15px}
+.tile{display:block;padding:0;border:0;background:#fff;border-radius:22px;overflow:hidden;width:min(240px,62vw);aspect-ratio:1;box-shadow:0 10px 22px -16px rgba(0,0,0,.55)}
+.tile img{width:100%;height:100%;object-fit:cover}
+.verb{font-size:clamp(34px,8vw,48px);font-weight:800}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:99px;border:0;background:var(--u);color:#fff;font-weight:700;font-size:17px}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.alt{background:var(--ul);color:var(--ut)}
+.btn.ghost{background:transparent;color:var(--ut);border:2px solid var(--ul)}
+.btn.big{min-height:56px;font-size:19px;padding-inline:24px}
+.btn:disabled{opacity:.4;cursor:default}
+.meaning{display:grid;gap:8px;justify-items:center;background:var(--ul);border-radius:20px;padding:14px 16px;width:100%}
+.meaning[hidden]{display:none}
+.mean{margin:0;font-size:20px;font-weight:700}
+.ex{margin:0;font-size:18px}
+.hl{color:var(--ut);background:light-dark(#fff,rgba(255,255,255,.1));padding:0 .22em;border-radius:6px}
+.nav{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:10px;width:100%;max-width:520px}
+.prompt{display:grid;gap:2px;justify-items:center}
+.prompt p{margin:0;color:var(--soft);font-weight:700}
+.say-row{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+.spk{background:var(--ul);color:var(--ut);width:52px;height:52px}
+.pics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:420px}
+.pic{position:relative;aspect-ratio:1;padding:0;border:4px solid transparent;border-radius:24px;background:#fff;overflow:hidden;box-shadow:0 10px 20px -16px rgba(0,0,0,.6);transition:transform .12s,opacity .2s}
+.pic img{width:100%;height:100%;object-fit:cover}
+.pic:active,.opt:active{transform:scale(.97)}
+.pic.no,.opt.no{opacity:.35}
+.pic.ok{border-color:var(--ok)}
+.badge{position:absolute;top:6px;inset-inline-end:6px;width:36px;height:36px;color:var(--ok)}
+.badge svg{width:100%;height:100%}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.fb{min-height:28px;font-size:18px}
+.fb p{margin:0}
+.yay{color:var(--ok);font-weight:700}
+.clue{margin:0;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;justify-content:center;font-size:18px}
+.clue span{background:var(--u);color:#fff;border-radius:99px;padding:2px 12px;font-size:14px;font-weight:700}
+.sent{font-size:clamp(22px,5.4vw,29px);line-height:1.6;margin:0;max-width:24em}
+.blank{display:inline-block;width:3.4em;border-bottom:4px dashed var(--u);height:1em;vertical-align:-.15em}
+.opts{display:grid;gap:10px;width:100%;max-width:440px}
+.opt{min-height:56px;border-radius:18px;border:2px solid var(--ul);background:var(--card);font-size:20px;font-weight:700;padding:10px 16px;transition:transform .12s,opacity .2s}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:light-dark(#fff,#0b2417)}
+.mem{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:560px}
+@media(min-width:600px){.mem{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mcard{position:relative;aspect-ratio:1;border:0;padding:0;background:none;perspective:700px}
+.face{position:absolute;inset:0;border-radius:18px;display:grid;place-items:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .45s;overflow:hidden}
+.back{background:var(--u) radial-gradient(rgba(255,255,255,.22) 2px,transparent 2.5px) 0 0/16px 16px;color:#fff;font:800 34px "Noto Serif",Georgia,serif}
+.front{transform:rotateY(180deg);background:#fff;border:3px solid var(--ul)}
+.front.w{background:var(--ul);color:var(--ink);padding:6px;font-weight:700;font-size:clamp(15px,4.4vw,21px);line-height:1.15}
+.front img{width:100%;height:100%;object-fit:cover}
+.mcard.up .back{transform:rotateY(-180deg)}
+.mcard.up .front{transform:rotateY(0)}
+.mcard.got .front{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
+.done{display:grid;gap:12px;justify-items:center;background:var(--card);border:2px solid var(--ul);border-radius:28px;padding:28px 20px;width:100%;max-width:520px}
+.bigstars{display:flex;gap:8px}
+.bigstars span{width:clamp(56px,18vw,76px);aspect-ratio:1;animation:pop .55s var(--d) both}
+.bigstars svg{width:100%;height:100%;fill:var(--line)}
+.bigstars .on svg{fill:var(--gold)}
+.bigcheck{width:84px;height:84px;color:var(--ok);animation:pop .55s both}.bigcheck svg{width:100%;height:100%}
+@keyframes pop{0%{transform:scale(0) rotate(-35deg)}70%{transform:scale(1.18)}100%{transform:scale(1)}}
+.done h2{font-size:clamp(30px,7vw,42px)}
+.done p{margin:0;font-size:18px}
+.foot{padding:20px max(5vw,16px) 32px;color:var(--soft);font-size:14px;border-top:1px solid var(--line)}
+.foot p{margin:0 0 4px;max-width:1140px;margin-inline:auto}
+.nospeech .sp{display:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="brand" id="brand" aria-label="Home: all chapters"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.5 5.5c3.2-1.6 6.4-1.5 9 .4v13.4c-2.6-1.8-5.8-2-9-.4zM21.5 5.5c-3.2-1.6-6.4-1.5-9 .4v13.4c2.6-1.8 5.8-2 9-.4z"/></svg><span>Phrasal Verbs Play</span></button>
+  <span class="pill" title="Stars won so far"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.85 5.9 6.45.9-4.7 4.5 1.15 6.4L12 17.2l-5.75 3.1 1.15-6.4-4.7-4.5 6.45-.9z"/></svg><b id="tot">0</b><span>/ 45</span></span>
+  <button class="mute" id="snd" aria-pressed="true" aria-label="Sound is on"></button>
+</header>
+<main id="app"></main>
+<footer class="foot">
+  <p>Developed by Ms. Amina Qatan. The phrasal verbs and example sentences come from her book <i>My First Phrasal Verbs Collection</i>.</p>
+  <p>Stars and progress are saved in this browser only.</p>
+</footer>
+<script>
+{
+const U=[
+{n:1,age:"Ages 2–4",kind:"Picture story",title:"Maha’s morning",topics:["Maha’s morning","Out of bed","Getting dressed","My things","Play and rest"]},
+{n:2,age:"Ages 5–8",kind:"Treasure adventure",title:"The garden quest",topics:["The garden quest","Ready to explore","On the trail","Under the stone","Home again"]},
+{n:3,age:"Ages 9–12",kind:"School mystery",title:"The missing trophy",topics:["The missing trophy","Open the case","Examine the photo","Test a theory","Explain the clues"]},
+{n:4,age:"Ages 13–15",kind:"Student news report",title:"A fridge for everyone",topics:["A fridge for everyone","Meet your sources","Read the data","Report on waste","Follow the story"]},
+{n:5,age:"Ages 16–18",kind:"Work-placement email",title:"Your first placement",topics:["Your first placement","First morning","At the desk","During a shift","Review and plan"]}];
+const D=[
+["wake up","open your eyes after sleeping","I [wake up]."],
+["put on","dress yourself in something","I [put on] my hat."],
+["pick up","lift something","I [pick up] my ball."],
+["tidy up","make a place neat","I [tidy up] my toys."],
+["get up","leave your bed","I [get up] when the sun comes in."],
+["sit down","move onto a seat","I [sit down] for breakfast."],
+["stand up","rise to your feet","I [stand up] beside my chair."],
+["lie down","rest your body flat","My teddy [lies down] on my pillow."],
+["take off","remove something you wear","I [take off] my hat."],
+["zip up","close a zip","Mum helps me [zip up] my coat."],
+["pull up","move something higher","I [pull up] my socks."],
+["dress up","wear clothes for pretend play","I [dress up] as a cat."],
+["put down","place something on a surface","I [put down] my cup."],
+["put away","return something to its place","I [put away] my crayons."],
+["take out","remove something from inside","I [take] a toy [out] of my bag."],
+["put back","return something to where it was","I [put back] the book."],
+["join in","take part in a game or activity","I [join in] when Dad starts to clap."],
+["turn around","turn to face the other way","I [turn around] to see my friend."],
+["curl up","make your body small and round","I [curl up] like a kitten."],
+["snuggle up","move close to feel warm and cosy","I [snuggle up] to Mum for a story."],
+["set off","start a journey","Noor and Sami [set off] from the garden gate."],
+["look for","try to find something","They [look for] a pot beside a palm tree."],
+["dig up","bring something out of the ground","They [dig up] a little tin."],
+["give back","return something to its owner","They [give back] the marble."],
+["pack up","put things into a bag or box","Noor [packs up] the picnic things."],
+["fill up","make a container full","Sami [fills up] his water bottle."],
+["head out","leave to go somewhere","We [head out] through the garden gate."],
+["come along","go with someone","“[Come along] with us, Grandpa!”"],
+["look around","look at what is near you","We [look around] the quiet garden."],
+["keep up","move as fast as someone else","Noor walks slowly so Sami can [keep up]."],
+["catch up","reach someone who went ahead","Sami stops and Noor [catches up] with him."],
+["turn back","return the way you came","At the locked gate, we [turn back]."],
+["lift up","raise something","Noor [lifts up] the flat stone."],
+["pull out","remove something by pulling","Sami [pulls out] a rolled-up map."],
+["brush off","remove something with a brushing movement","Noor [brushes] the sand [off] the tin."],
+["peek out","look out from a hiding place","Two little eyes [peek out] from the leaves."],
+["hand over","give something to someone","Sami [hands over] the marble to Grandpa."],
+["wrap up","cover something in paper or cloth","We [wrap up] the tin in a scarf."],
+["hide away","stay somewhere you cannot easily be seen","The kitten [hides away] under the bench."],
+["come back","return to a place","We [come back] to the garden next Friday."],
+["find out","discover information","Mariam wanted to [find out] what had happened."],
+["look into","investigate","She asked Ali to [look into] it."],
+["rule out","decide something is impossible","Mariam could [rule out] the art club."],
+["piece together","use separate clues to understand what happened","A wet shelf, a mop and a note helped her [piece together] the rest."],
+["slip away","leave quietly without being noticed","A visitor [slips away] before the bell rings."],
+["check out","examine something","Mariam [checks out] the empty shelf."],
+["look up","search for information in a reference source","Ali [looks up] the word engraved on the trophy."],
+["write down","record in writing","He [writes down] the time on the note."],
+["come across","find by chance","We [come across] a photo behind the clock."],
+["turn up","appear after being lost or absent","A lost key [turns up] in the art room."],
+["make out","manage to see or read something unclear","Can you [make out] the date in the photo?"],
+["zoom in","make part of an image look larger","We [zoom in] on the clock in the photo."],
+["go over","review carefully","The detectives [go over] their notes."],
+["cross out","draw a line through a word or name","Ali [crosses out] a name on the list."],
+["narrow down","reduce the number of possibilities","We [narrow down] the hiding places to two."],
+["work out","solve by thinking","Mariam [works out] when the cleaner arrived."],
+["match up","agree or fit together","The two witnesses’ descriptions [match up]."],
+["leave out","omit something","Did the witness [leave out] a detail?"],
+["back up","support with evidence","The photo [backs up] Ali’s account."],
+["clear up","explain something confusing","The caretaker [clears up] the mystery."],
+["set up","start or organise something","A student team [set up] a sharing fridge on Sunday.","ed"],
+["carry out","do a planned task","On Monday, volunteers [carried out] a count."],
+["point out","draw attention to a fact","The editor [pointed out] that one day’s count tells us little."],
+["bring about","cause a change","Could the fridge [bring about] a lasting change in lunchtime waste?"],
+["look back on","think about something that happened earlier","Pupils [look back on] the fridge’s first week."],
+["reach out to","contact someone","The editor [reaches out to] the kitchen team."],
+["come forward","offer information or help","Two volunteers [come forward] to be interviewed."],
+["speak up","express an opinion openly","One pupil [speaks up] about wasted lunches."],
+["look through","read or examine a collection","We [look through] the lunch records."],
+["sort out","put mixed things in order or groups","Reporters [sort out] the survey forms by date."],
+["add up","calculate a total","The team [adds up] the items shared."],
+["break down","separate into smaller parts for analysis","We [break down] the figures by school day."],
+["sum up","state the main points briefly","The headline [sums up] the result."],
+["leave behind","fail to take something with you","Pupils [leave behind] unopened snacks."],
+["throw away","discard something","Fewer pupils [throw away] sealed packets."],
+["cut down on","reduce how much you use or do","Can the fridge help us [cut down on] waste?"],
+["build up","increase gradually","Support [builds up] after the report appears."],
+["catch on","become popular","The idea [catches on] at another school."],
+["roll out","introduce a new scheme or service","Two schools [roll out] the fridge scheme in May."],
+["call for","publicly ask for something","The school council [calls for] a second fridge."],
+["follow up on","take further action about something","I am writing to [follow up on] our conversation about my placement."],
+["draw up","prepare a written plan or list","I can [draw up] a checklist for recording deliveries."],
+["talk through","discuss the details step by step","Could we [talk through] the procedure for a damaged parcel?"],
+["take on","accept a responsibility","I would be happy to [take on] responsibility for updating the log."],
+["check in","report your arrival","Please [check in] at reception at eight."],
+["show around","guide someone through a place","Salma [shows] me [around] the warehouse."],
+["run through","review the steps in order","We [run through] the delivery checklist."],
+["sign in","record your arrival with your name","Visitors [sign in] at the front desk."],
+["fill in","complete a document by adding information","I [fill in] the date on the delivery form."],
+["send out","distribute a message or document","Our team [sends out] the revised schedule."],
+["pass on","give information to another person","Please [pass on] the new delivery time."],
+["get back to","reply to someone later","I will [get back to] you after I check the log."],
+["deal with","handle a situation or request","Who [deals with] damaged parcels?"],
+["look after","take responsibility for something or someone","I [look after] the visitor log during lunch."],
+["step in","intervene when help is needed","My supervisor [steps in] when a driver needs help."],
+["hand back","return something directly to someone","I [hand back] the signed form to the driver."],
+["put forward","propose an idea for consideration","May I [put forward] an idea for the checklist?"],
+["weigh up","consider options before deciding","We [weigh up] two delivery routes."],
+["map out","plan the stages of something","We [map out] the next three training sessions."],
+["sign off on","give formal approval for something","My supervisor [signs off on] the final report."]];
+const V=D.map(([verb,mean,ex,form],i)=>({id:i+1,verb,mean,ex,form,u:Math.floor(i/20)+1}));
+const MODES=[{k:"learn",name:"Look & listen",desc:"Picture cards you can hear",ic:"book"},{k:"pop",name:"Find the picture",desc:"Hear a verb, tap its picture",ic:"pop"},{k:"memory",name:"Memory pairs",desc:"Match each picture to its verb",ic:"mem"},{k:"gap",name:"Fill the gap",desc:"Finish sentences from the book",ic:"gap"}];
+const MN={learn:"Look & listen",pop:"Find the picture",memory:"Memory pairs",gap:"Fill the gap"};
+const S=p=>`<svg viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+const ln='fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"';
+const IC={
+star:S('<path d="M12 2.6l2.85 5.9 6.45.9-4.7 4.5 1.15 6.4L12 17.2l-5.75 3.1 1.15-6.4-4.7-4.5 6.45-.9z"/>'),
+spk:S('<path fill="currentColor" d="M3.5 9.2h3.8L12 5.4v13.2l-4.7-3.8H3.5z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15.5 9a4.2 4.2 0 0 1 0 6M18.2 6.4a8 8 0 0 1 0 11.2"/>'),
+mute:S('<path fill="currentColor" d="M3.5 9.2h3.8L12 5.4v13.2l-4.7-3.8H3.5z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5l5 5M21 9.5l-5 5"/>'),
+back:S(`<path ${ln} d="M14.5 5.5L8 12l6.5 6.5"/>`),
+arrow:S(`<path ${ln} d="M9.5 5.5L16 12l-6.5 6.5"/>`),
+close:S(`<path ${ln} d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>`),
+check:S('<circle cx="12" cy="12" r="11" fill="currentColor"/><path fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M7 12.5l3.2 3.2L17 9"/>'),
+book:S('<path fill="currentColor" d="M2.5 5.5c3.2-1.6 6.4-1.5 9 .4v13.4c-2.6-1.8-5.8-2-9-.4zM21.5 5.5c-3.2-1.6-6.4-1.5-9 .4v13.4c2.6-1.8 5.8-2 9-.4z"/>'),
+pop:S('<g fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="8.5" height="8.5" rx="2"/><rect x="2.5" y="13" width="8.5" height="8.5" rx="2"/><rect x="13" y="13" width="8.5" height="8.5" rx="2"/></g><rect x="13" y="2.5" width="8.5" height="8.5" rx="2" fill="currentColor"/>'),
+mem:S('<rect x="2.5" y="5" width="9.5" height="14" rx="2.2" fill="currentColor" transform="rotate(-9 7 12)"/><rect x="12.5" y="5" width="9.5" height="14" rx="2.2" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(9 17 12)"/>'),
+gap:S('<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M2.5 8h6M2.5 16h9M17.5 16h4"/><rect x="11" y="4.5" width="10.5" height="7" rx="2" fill="currentColor"/>')};
+const app=document.getElementById("app"),snd=document.getElementById("snd");
+let P={stars:{},seen:{},sound:true};
+try{const s=JSON.parse(localStorage.getItem("pv-play-1")||"null");if(s&&typeof s==="object")P=Object.assign(P,s)}catch(e){}
+const save=()=>{try{localStorage.setItem("pv-play-1",JSON.stringify(P))}catch(e){}};
+const canSpeak="speechSynthesis" in window&&"SpeechSynthesisUtterance" in window;
+if(!canSpeak)document.body.classList.add("nospeech");
+let voice=null,ctx=null,cur=1,G=null;
+const pickVoice=()=>{try{const vs=speechSynthesis.getVoices();voice=vs.find(v=>/en[-_]GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}catch(e){}};
+if(canSpeak){pickVoice();try{speechSynthesis.addEventListener("voiceschanged",pickVoice)}catch(e){}}
+function say(t){if(!P.sound||!canSpeak)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=voice?voice.lang:"en-GB";if(voice)u.voice=voice;u.rate=.85;u.pitch=1.05;speechSynthesis.speak(u)}catch(e){}}
+function tone(ok){if(!P.sound)return;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")ctx.resume();(ok?[523,784]:[294,220]).forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+i*.11;o.type=ok?"triangle":"sine";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3)})}catch(e){}}
+const img=id=>`img/${String(id).padStart(3,"0")}.webp`;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const words=n=>V.filter(v=>v.u===n);
+const plain=s=>s.replace(/[[\]]/g,"");
+const blanked=s=>s.replace(/\[[^\]]+\]/g," blank ");
+const hl=s=>s.replace(/\[([^\]]+)\]/g,'<b class="hl">$1</b>');
+const topicOf=v=>U[v.u-1].topics[Math.floor(((v.id-1)%20)/4)];
+const ustars=n=>["pop","memory","gap"].reduce((s,k)=>s+(P.stars[n+"-"+k]||0),0);
+const starRow=n=>[1,2,3].map(k=>IC.star.replace("<svg",`<svg class="${k<=n?"on":""}"`)).join("");
+const updTotal=()=>{document.getElementById("tot").textContent=U.reduce((s,u)=>s+ustars(u.n),0)};
+const IRR={set:"set",put:"put",cut:"cut",bring:"brought",come:"came",speak:"spoke",break:"broke",leave:"left",throw:"threw",build:"built",catch:"caught",get:"got",take:"took",give:"gave",go:"went",make:"made",write:"wrote",find:"found",draw:"drew",run:"ran",send:"sent",deal:"dealt",keep:"kept",hide:"hid",dig:"dug",sit:"sat",stand:"stood",lie:"lay",wake:"woke"};
+const sForm=h=>/(s|sh|ch|x|z|o)$/.test(h)?h+"es":/[^aeiou]y$/.test(h)?h.slice(0,-1)+"ies":h+"s";
+const past=h=>IRR[h]||(/^(zip|sum|step|slip|wrap|map)$/.test(h)?h+h.slice(-1)+"ed":/e$/.test(h)?h+"d":/[^aeiou]y$/.test(h)?h.slice(0,-1)+"ied":h+"ed");
+const conj=(verb,f)=>{const w=verb.split(" "),h=w[0];return[f==="s"?sForm(h):f==="ed"?past(h):h,w.slice(1).join(" ")]};
+const formOf=(verb,b)=>{const h=verb.split(" ")[0],bh=b.toLowerCase().split(" ")[0];return bh===h?"base":bh===sForm(h)?"s":bh===past(h)?"ed":"base"};
+function gapQ(v,ws,m){
+  const br=[...v.ex.matchAll(/\[([^\]]+)\]/g)].map(x=>x[1]),split=br.length>1,f=v.form||formOf(v.verb,br[0]);
+  const txt=w=>{const[h,r]=conj(w.verb,f);return split?`${h} … ${r}`:`${h} ${r}`};
+  const ans=split?`${br[0].toLowerCase()} … ${br[1]}`:br[0].toLowerCase();
+  const others=shuffle(ws.filter(w=>w!==v)).map(txt).filter((t,i,a)=>t!==ans&&a.indexOf(t)===i).slice(0,m-1);
+  return{v,ans,opts:shuffle([ans,...others])};
+}
+function setSound(){snd.innerHTML=P.sound?IC.spk:IC.mute;snd.setAttribute("aria-pressed",P.sound);snd.setAttribute("aria-label",P.sound?"Sound is on":"Sound is off")}
+function home(){
+  G=null;app.className="";
+  app.innerHTML=`<section class="band wrap hero">
+<div class="cover" role="img" aria-label="Characters from the five chapters: Maha, Noor and Sami with Grandpa, Ali, a student reporter and Maryam at work">${[1,28,50,73,86].map(id=>`<img src="${img(id)}" alt="">`).join("")}</div>
+<div><p class="lab">Ages 2–18 · 100 phrasal verbs · 5 chapters</p><h1>My First Phrasal Verbs</h1>
+<p class="lede">Look, listen, match and play with every phrasal verb from the book. Choose a chapter to start.</p>
+<p class="tip"><b>Grown-ups:</b> turn the sound on and play the first round together. Tap any picture or word to hear it said aloud.</p></div></section>
+<section class="band wrap"><h2 class="h2">Choose a chapter</h2><div class="chaps">${U.map(u=>`<button class="chap u${u.n}" data-act="unit" data-u="${u.n}">
+<span class="chap-top"><span class="num">${u.n}</span><span class="age">${u.age} · ${u.kind}</span></span>
+<span class="chap-title">${u.title}</span>
+<span class="thumbs">${[1,6,11,16].map(k=>`<img src="${img((u.n-1)*20+k)}" alt="" loading="lazy">`).join("")}</span>
+<span class="chap-foot"><span class="stars-sm">${IC.star}${ustars(u.n)} of 9 stars</span><span class="go">Open${IC.arrow}</span></span></button>`).join("")}</div></section>`;
+  window.scrollTo(0,0);
+}
+function unit(n){
+  G=null;cur=n;const u=U[n-1],seen=(P.seen[n]||[]).length;app.className="u"+n;
+  app.innerHTML=`<header class="ubar"><button class="round" data-act="home" aria-label="Back to chapters">${IC.back}</button><div><p class="age">Chapter ${n} · ${u.age} · ${u.kind}</p><h1>${u.title}</h1></div></header>
+<section class="band wrap"><h2 class="h2">Pick a game</h2><div class="modes">${MODES.map(m=>{const st=P.stars[n+"-"+m.k]||0;return `<button class="mode" data-act="mode" data-m="${m.k}"><span class="ic">${IC[m.ic]}</span><b>${m.name}</b><small>${m.desc}</small>${m.k==="learn"?`<span class="seen">${seen} of 20 seen</span>`:`<span class="mstars" role="img" aria-label="${st} of 3 stars">${starRow(st)}</span>`}</button>`}).join("")}</div></section>
+<section class="band wrap words"><h2 class="h2">The 20 phrasal verbs</h2><p class="hint">Tap a word to hear it in a sentence.</p>${u.topics.map((t,i)=>`<h3>${t}</h3><div class="chips">${words(n).slice(i*4,i*4+4).map(v=>`<button class="chip" data-act="hear" data-id="${v.id}"><img src="${img(v.id)}" alt="" loading="lazy"><span><b>${v.verb}</b><small>${v.mean}</small></span></button>`).join("")}</div>`).join("")}</section>`;
+  window.scrollTo(0,0);
+}
+const gbar=(i,n,label)=>`<header class="gbar"><button class="round" data-act="unit" data-u="${G.u}" aria-label="Stop and go back">${IC.close}</button><span class="gname">${MN[G.mode]}</span><div class="meter" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${i}"><i style="width:${Math.round(i/n*100)}%"></i></div><span class="count" id="cnt">${label}</span></header>`;
+const nextBtn=()=>`<button class="btn big next" data-act="nextq">${G.i<G.list.length-1?"Next":"See my stars"}${IC.arrow}</button>`;
+function showNext(){const b=app.querySelector(".next");if(b)try{b.focus({preventScroll:true});b.scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){}}
+function start(k){
+  const ws=words(cur);G={mode:k,u:cur,i:0,score:0,wrong:[],done:false,last:null};
+  if(k==="learn"){G.list=ws;G.open=false;learn();say(ws[0].verb)}
+  else if(k==="pop"){G.list=shuffle(ws).slice(0,10).map(v=>({v,opts:shuffle([v,...shuffle(ws.filter(w=>w!==v)).slice(0,3)])}));pop();say(G.list[0].v.verb)}
+  else if(k==="gap"){const m=cur<=2?3:4;G.list=shuffle(ws).slice(0,10).map(v=>gapQ(v,ws,m));gap();if(cur===1)say(blanked(G.list[0].v.ex))}
+  else memory(ws);
+  window.scrollTo(0,0);
+}
+function learn(){
+  const v=G.list[G.i],seen=P.seen[G.u]=P.seen[G.u]||[];if(!seen.includes(v.id)){seen.push(v.id);save()}
+  app.innerHTML=gbar(G.i+1,20,`${G.i+1} / 20`)+`<section class="band play"><article class="flash">
+<p class="topic">${topicOf(v)}</p>
+<button class="tile" data-act="say" data-t="verb" aria-label="Hear ${v.verb}"><img src="${img(v.id)}" alt="Picture for ${v.verb}"></button>
+<h2 class="verb">${v.verb}</h2>
+<div class="row"><button class="btn sp" data-act="say" data-t="verb">${IC.spk}Hear it</button><button class="btn alt" data-act="reveal" aria-expanded="${G.open}">${G.open?"Hide meaning":"What does it mean?"}</button></div>
+<div class="meaning"${G.open?"":" hidden"}><p class="mean">${v.mean}</p><p class="ex">${hl(v.ex)}</p><button class="btn ghost sp" data-act="say" data-t="ex">${IC.spk}Hear the sentence</button></div>
+</article><div class="nav"><button class="btn big ghost" data-act="prev"${G.i?"":" disabled"}>${IC.back}Back</button><button class="btn big" data-act="next">${G.i<19?"Next":"Finish"}${IC.arrow}</button></div></section>`;
+}
+function pop(){
+  const q=G.list[G.i],v=q.v;
+  app.innerHTML=gbar(G.i+(G.done?1:0),10,`${G.i+1} / 10`)+`<section class="band play">
+<div class="prompt"><p>Find the picture for</p><div class="say-row"><h2 class="verb">${v.verb}</h2><button class="round spk sp" data-act="say" data-t="verb" aria-label="Hear it again">${IC.spk}</button></div></div>
+<div class="pics">${q.opts.map((o,k)=>{const ok=G.done&&o===v,no=G.wrong.includes(o.id);return `<button class="pic${ok?" ok":""}${no?" no":""}${G.last===o.id?" shake":""}" data-act="pick" data-id="${o.id}" aria-label="${ok?"Correct picture":"Picture "+(k+1)}"${G.done||no?" disabled":""}><img src="${img(o.id)}" alt="">${ok?`<span class="badge">${IC.check}</span>`:""}</button>`}).join("")}</div>
+<div class="fb" aria-live="polite">${G.done?`<p><span class="yay">Yes!</span> <b>${v.verb}</b> means “${v.mean}”.</p>`:G.wrong.length?"<p>Not that one. Try again!</p>":""}</div>
+${G.done?nextBtn():""}</section>`;
+  G.last=null;
+}
+function pick(id){
+  const v=G.list[G.i].v;if(G.done)return;
+  if(id===v.id){G.done=true;if(!G.wrong.length)G.score++;tone(true);say("Yes! "+v.verb)}
+  else{G.wrong.push(id);G.last=id;tone(false);say("Try again. "+v.verb)}
+  pop();if(G.done)showNext();
+}
+function gap(){
+  const q=G.list[G.i],v=q.v;
+  const sent=v.ex.replace(/\[([^\]]+)\]/g,(m,t)=>G.done?`<b class="hl">${t}</b>`:'<span class="blank" role="img" aria-label="blank"></span>');
+  app.innerHTML=gbar(G.i+(G.done?1:0),10,`${G.i+1} / 10`)+`<section class="band play">
+<p class="clue"><span>Clue</span>${v.mean}</p>
+<p class="sent">${sent}</p>
+<button class="btn alt sp" data-act="say" data-t="gapq">${IC.spk}Read it to me</button>
+<div class="opts">${q.opts.map((o,k)=>{const ok=G.done&&o===q.ans,no=G.wrong.includes(k);return `<button class="opt${ok?" ok":""}${no?" no":""}${G.last===k?" shake":""}" data-act="opt" data-k="${k}"${G.done||no?" disabled":""}>${o}</button>`}).join("")}</div>
+<div class="fb" aria-live="polite">${G.done?'<p class="yay">Well done!</p>':G.wrong.length?"<p>Not that one. Try again!</p>":""}</div>
+${G.done?nextBtn():""}</section>`;
+  G.last=null;
+}
+function opt(k){
+  const q=G.list[G.i];if(G.done)return;
+  if(q.opts[k]===q.ans){G.done=true;if(!G.wrong.length)G.score++;tone(true);say(plain(q.v.ex))}
+  else{G.wrong.push(k);G.last=k;tone(false);say("Try again")}
+  gap();if(G.done)showNext();
+}
+function memory(ws){
+  const pool=shuffle(ws).slice(0,6);
+  Object.assign(G,{cards:shuffle(pool.flatMap(v=>[{v,k:"pic"},{v,k:"word"}])),open:[],got:0,moves:0,lock:false});
+  app.innerHTML=gbar(0,6,"Moves 0")+`<section class="band play"><p class="hint">Turn over two cards. Find a picture and its phrasal verb.</p><div class="mem">${G.cards.map((c,k)=>`<button class="mcard" data-act="flip" data-k="${k}" aria-label="Card ${k+1}, face down"><span class="face back" aria-hidden="true">?</span><span class="face front${c.k==="word"?" w":""}" aria-hidden="true">${c.k==="pic"?`<img src="${img(c.v.id)}" alt="">`:c.v.verb}</span></button>`).join("")}</div></section>`;
+}
+function flip(k,el){
+  const g=G;if(g.lock||el.classList.contains("up"))return;
+  const c=g.cards[k];el.classList.add("up");el.setAttribute("aria-label",c.k==="pic"?"Picture card for "+c.v.verb:"Word card: "+c.v.verb);
+  if(c.k==="word")say(c.v.verb);
+  g.open.push([k,el]);if(g.open.length<2)return;
+  g.moves++;document.getElementById("cnt").textContent="Moves "+g.moves;
+  const[[a,ea],[b,eb]]=g.open;g.open=[];
+  if(g.cards[a].v===g.cards[b].v){
+    ea.classList.add("got");eb.classList.add("got");g.got++;tone(true);
+    setTimeout(()=>{if(G===g)say(g.cards[a].v.verb)},300);
+    const m=app.querySelector(".meter i");if(m)m.style.width=Math.round(g.got/6*100)+"%";
+    if(g.got===6)setTimeout(()=>{if(G===g)done(g.moves<=9?3:g.moves<=13?2:1,`You found all 6 pairs in ${g.moves} moves.`)},1300);
+  }else{
+    g.lock=true;
+    setTimeout(()=>{if(G!==g)return;[ea,eb].forEach((e,i)=>{e.classList.remove("up");e.setAttribute("aria-label",`Card ${[a,b][i]+1}, face down`)});g.lock=false},1150);
+  }
+}
+function done(s,line){
+  const key=G.u+"-"+G.mode;
+  if(s){P.stars[key]=Math.max(P.stars[key]||0,s);save();updTotal()}
+  const head=s?["","Good try!","Great job!","Super star!"][s]:"All 20 cards done!";
+  app.innerHTML=gbar(1,1,"Done")+`<section class="band play"><div class="done">${s?`<div class="bigstars" role="img" aria-label="${s} of 3 stars">${[1,2,3].map(k=>`<span class="${k<=s?"on":""}" style="--d:${(k-1)*.22}s">${IC.star}</span>`).join("")}</div>`:`<div class="bigcheck">${IC.check}</div>`}
+<h2>${head}</h2><p>${line}</p><div class="row"><button class="btn big" data-act="again">${s?"Play again":"Start again"}</button><button class="btn big ghost" data-act="unit" data-u="${G.u}">More games</button></div></div></section>`;
+  tone(true);say(head);window.scrollTo(0,0);
+}
+app.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b||b.disabled)return;const a=b.dataset.act;
+  if(a==="home")home();
+  else if(a==="unit")unit(+b.dataset.u);
+  else if(a==="mode")start(b.dataset.m);
+  else if(a==="hear"){const v=V[b.dataset.id-1];say(v.verb+". "+plain(v.ex))}
+  else if(a==="say"){const v=G.mode==="learn"?G.list[G.i]:G.list[G.i].v,t=b.dataset.t;say(t==="verb"?v.verb:t==="ex"||G.done?plain(v.ex):blanked(v.ex))}
+  else if(a==="reveal"){G.open=!G.open;learn();if(G.open){const v=G.list[G.i];say(v.mean+". "+plain(v.ex))}}
+  else if(a==="prev"){if(G.i>0){G.i--;G.open=false;learn();say(G.list[G.i].verb)}}
+  else if(a==="next"){if(G.i<19){G.i++;G.open=false;learn();say(G.list[G.i].verb)}else done(0,"You looked at every picture in this chapter. Now try a game!")}
+  else if(a==="nextq"){
+    G.i++;if(G.i>=G.list.length){done(G.score>=9?3:G.score>=6?2:1,`${G.score} of ${G.list.length} right on the first try.`);return}
+    G.wrong=[];G.done=false;
+    if(G.mode==="pop"){pop();say(G.list[G.i].v.verb)}else{gap();if(G.u===1)say(blanked(G.list[G.i].v.ex))}
+    window.scrollTo(0,0);
+  }
+  else if(a==="pick")pick(+b.dataset.id);
+  else if(a==="opt")opt(+b.dataset.k);
+  else if(a==="flip")flip(+b.dataset.k,b);
+  else if(a==="again")start(G.mode);
+});
+document.addEventListener("keydown",e=>{
+  if(!G||G.mode!=="learn")return;
+  if(e.key==="ArrowRight"){const n=app.querySelector('[data-act="next"]');if(n)n.click()}
+  if(e.key==="ArrowLeft"){const p=app.querySelector('[data-act="prev"]:not([disabled])');if(p)p.click()}
+});
+document.getElementById("brand").addEventListener("click",home);
+snd.addEventListener("click",()=>{P.sound=!P.sound;save();setSound();if(P.sound)say("Sound on");else try{speechSynthesis.cancel()}catch(e){}});
+setSound();updTotal();home();
+}
+</script>
+</body>
+</html>
