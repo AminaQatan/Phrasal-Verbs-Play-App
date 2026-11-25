@@ -299,7 +299,7 @@ const pickVoice=()=>{try{const vs=speechSynthesis.getVoices();voice=vs.find(v=>/
 if(canSpeak){pickVoice();try{speechSynthesis.addEventListener("voiceschanged",pickVoice)}catch(e){}}
 function say(t){if(!P.sound||!canSpeak)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=voice?voice.lang:"en-GB";if(voice)u.voice=voice;u.rate=.85;u.pitch=1.05;speechSynthesis.speak(u)}catch(e){}}
 function tone(ok){if(!P.sound)return;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")ctx.resume();(ok?[523,784]:[294,220]).forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+i*.11;o.type=ok?"triangle":"sine";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+.3)})}catch(e){}}
-const img=id=>`img/${String(id).padStart(3,"0")}.webp`;
+const img=id=>`${String(id).padStart(3,"0")}.webp`;
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const words=n=>V.filter(v=>v.u===n);
 const plain=s=>s.replace(/[[\]]/g,"");
