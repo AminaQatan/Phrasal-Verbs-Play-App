@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Phrasal Verbs Play</title>
+<meta name="description" content="Look, listen, match and play with 100 phrasal verbs from My First Phrasal Verbs Collection.">
+<meta name="theme-color" content="#733b82">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Phrasal Play">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Noto+Serif:wght@700;800&display=swap" rel="stylesheet">
 <style>
@@ -147,6 +156,7 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .done p{margin:0;font-size:18px}
 .foot{padding:20px max(5vw,16px) 32px;color:var(--soft);font-size:14px;border-top:1px solid var(--line)}
 .foot p{margin:0 0 4px;max-width:1140px;margin-inline:auto}
+.install{margin:12px 0 0;font-size:15px;max-width:34em}div.install{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .nospeech .sp{display:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -287,6 +297,7 @@ check:S('<circle cx="12" cy="12" r="11" fill="currentColor"/><path fill="none" s
 book:S('<path fill="currentColor" d="M2.5 5.5c3.2-1.6 6.4-1.5 9 .4v13.4c-2.6-1.8-5.8-2-9-.4zM21.5 5.5c-3.2-1.6-6.4-1.5-9 .4v13.4c2.6-1.8 5.8-2 9-.4z"/>'),
 pop:S('<g fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="8.5" height="8.5" rx="2"/><rect x="2.5" y="13" width="8.5" height="8.5" rx="2"/><rect x="13" y="13" width="8.5" height="8.5" rx="2"/></g><rect x="13" y="2.5" width="8.5" height="8.5" rx="2" fill="currentColor"/>'),
 mem:S('<rect x="2.5" y="5" width="9.5" height="14" rx="2.2" fill="currentColor" transform="rotate(-9 7 12)"/><rect x="12.5" y="5" width="9.5" height="14" rx="2.2" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(9 17 12)"/>'),
+plus:S(`<path ${ln} d="M12 5v14M5 12h14"/>`),
 gap:S('<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M2.5 8h6M2.5 16h9M17.5 16h4"/><rect x="11" y="4.5" width="10.5" height="7" rx="2" fill="currentColor"/>')};
 const app=document.getElementById("app"),snd=document.getElementById("snd");
 let P={stars:{},seen:{},sound:true};
@@ -321,6 +332,20 @@ function gapQ(v,ws,m){
   const others=shuffle(ws.filter(w=>w!==v)).map(txt).filter((t,i,a)=>t!==ans&&a.indexOf(t)===i).slice(0,m-1);
   return{v,ans,opts:shuffle([ans,...others])};
 }
+let deferredPrompt=null,topLevel=true;
+try{topLevel=window.top===window.self}catch(e){topLevel=false}
+const standalone=()=>{try{return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){return false}};
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+function installBox(){
+  if(standalone()||!topLevel)return "";
+  if(deferredPrompt)return `<div class="install"><button class="btn" data-act="install">${IC.plus}Install the app</button><span>Then play it from your home screen, like any app.</span></div>`;
+  if(isIOS)return `<p class="install">To keep it as an app on this iPhone or iPad: tap <b>Share</b>, then <b>Add to Home Screen</b>.</p>`;
+  return "";
+}
+const updInstall=()=>{const el=document.getElementById("inst");if(el)el.innerHTML=installBox()};
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;updInstall()});
+window.addEventListener("appinstalled",()=>{deferredPrompt=null;updInstall()});
+if("serviceWorker" in navigator&&location.protocol==="https:"&&topLevel){try{navigator.serviceWorker.register("sw.js").catch(()=>{})}catch(e){}}
 function setSound(){snd.innerHTML=P.sound?IC.spk:IC.mute;snd.setAttribute("aria-pressed",P.sound);snd.setAttribute("aria-label",P.sound?"Sound is on":"Sound is off")}
 function home(){
   G=null;app.className="";
@@ -328,7 +353,7 @@ function home(){
 <div class="cover" role="img" aria-label="Characters from the five chapters: Maha, Noor and Sami with Grandpa, Ali, a student reporter and Maryam at work">${[1,28,50,73,86].map(id=>`<img src="${img(id)}" alt="">`).join("")}</div>
 <div><p class="lab">Ages 2–18 · 100 phrasal verbs · 5 chapters</p><h1>My First Phrasal Verbs</h1>
 <p class="lede">Look, listen, match and play with every phrasal verb from the book. Choose a chapter to start.</p>
-<p class="tip"><b>Grown-ups:</b> turn the sound on and play the first round together. Tap any picture or word to hear it said aloud.</p></div></section>
+<p class="tip"><b>Grown-ups:</b> turn the sound on and play the first round together. Tap any picture or word to hear it said aloud.</p><div id="inst">${installBox()}</div></div></section>
 <section class="band wrap"><h2 class="h2">Choose a chapter</h2><div class="chaps">${U.map(u=>`<button class="chap u${u.n}" data-act="unit" data-u="${u.n}">
 <span class="chap-top"><span class="num">${u.n}</span><span class="age">${u.age} · ${u.kind}</span></span>
 <span class="chap-title">${u.title}</span>
@@ -447,6 +472,7 @@ app.addEventListener("click",e=>{
   else if(a==="opt")opt(+b.dataset.k);
   else if(a==="flip")flip(+b.dataset.k,b);
   else if(a==="again")start(G.mode);
+  else if(a==="install"&&deferredPrompt){const d=deferredPrompt;deferredPrompt=null;try{d.prompt();d.userChoice.then(updInstall,updInstall)}catch(e){updInstall()}}
 });
 document.addEventListener("keydown",e=>{
   if(!G||G.mode!=="learn")return;
